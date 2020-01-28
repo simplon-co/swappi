@@ -14,16 +14,16 @@ import * as PropTypes from "prop-types";
 // }
 
 
-const SearchBar = ({onSearchBarChange}) => {
+const SearchBar = ({onSearchBarChange: onSearchBarChangeEvent}) => {
     return (
         <div>
             <input type="text" placeholder="Search.."
                    onChange={(e) =>
-                       onSearchBarChange(e)}/>
+                       onSearchBarChangeEvent(e)}/>
         </div>
     );
 };
 
-SearchBar.propTypes = {onSearchBarChange: PropTypes.any};
+SearchBar.propTypes = {onSearchBarChange: PropTypes.func};
 
 export default SearchBar;
