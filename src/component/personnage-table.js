@@ -1,9 +1,9 @@
 import * as React from "react";
+import PersonnageRow from "./personnage-row";
 
 export default function PersonnageTable(props) {
     const {peoples} = props;
     return (
-        // <div>
             <table>
                 <thead>
                 <tr>
@@ -17,15 +17,9 @@ export default function PersonnageTable(props) {
                     <td>fiche</td>
                 </tr>
                 {peoples && peoples.map((people, i) => {
-                    return (
-                        <tr key={i}>
-                            <td>{people.name}</td>
-                            <td>{people.gender}</td>
-                            {/*<td><Link>lien vers la fiche</Link></td>*/}
-                        </tr>)
+                    return (<PersonnageRow people={peoples[i]}/>)
                 })}
                 </tbody>
             </table>
-        // </div>
     );
 }
