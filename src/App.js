@@ -1,7 +1,8 @@
 import React from 'react';
-import { Router, Route, Switch } from "react-router";
-import {Link} from "react-router-dom"
+// import { Router, Route, Switch } from "react-router";
+// import {Link} from "react-router-dom"
 import './App.css';
+import SearchBar from "./component/search-bar";
 
 const swapiSiteUrl = "https://swapi.co/";
 const apiUrl = "https://swapi.co/api/people/";
@@ -44,16 +45,15 @@ class App extends React.Component {
             });
     };
 
-
     render = () => {
         const {peoples} = this.state;
         return (
             <div>
                 <u>{swapiSiteUrl}</u><br/><br/>
-                <div>
-                    <input type="text" placeholder="Search.."
-                           onChange={e => this.onSearchBarChange(e)}/>
-                </div>
+
+                <SearchBar onSearchBarChange={this.onSearchBarChange}/>
+
+
                 <ul>
                     {peoples && peoples.map((people, i) => {
                         return (
