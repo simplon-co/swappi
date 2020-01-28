@@ -14,20 +14,26 @@ class App extends React.Component {
     }
 
     onSearchBarChange(event) {
-        this.setState({value: event.target.value});
+        this.getPeopleSearch(event.currentTarget.value)
     }
 
-
-
-    componentDidMount() {
-        console.log("componentDidMount render peoples:" + this.state.peoples);
-        fetch(apiUrl)
+    getPeopleSearch(textInputBar) {
+        let searchUrl = apiUrl + "?search=" + textInputBar;
+        fetch(searchUrl)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 this.setState({peoples: data.results})
             });
     }
+
+    componentDidMount() {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({peoples: data.results})
+            });
+    }
+
 
     render() {
         const {peoples} = this.state;
@@ -37,7 +43,7 @@ class App extends React.Component {
                 <u>{swapiSiteUrl}</u><br/><br/>
                 <div>
                     <input type="text" placeholder="Search.."
-                           onChange={this.onSearchBarChange()}/>
+                           onChange={e => this.onSearchBarChange(e)}/>
                 </div>
                 <ul>
                     {peoples && peoples.map((people, i) => {
@@ -50,11 +56,6 @@ class App extends React.Component {
             </div>)
     }
 }
-
-
-
-
-
 
 
 // class App extends React.Component {
