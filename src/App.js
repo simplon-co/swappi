@@ -51,10 +51,7 @@ class App extends React.Component {
         return (
             <div>
                 <u>{swapiSiteUrl}</u><br/><br/>
-
                 <SearchBar onSearchBarChange={this.onSearchBarChange}/>
-
-
                 <ul>
                     {peoples && peoples.map((people, i) => {
                         return (
@@ -63,9 +60,7 @@ class App extends React.Component {
                             </li>)
                     })}
                 </ul>
-
-<PersonnageTable peoples={peoples}/>
-
+                <PersonnageTable peoples={peoples}/>
             </div>)
     };
 }
