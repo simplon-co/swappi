@@ -1,11 +1,20 @@
 import React from 'react';
+import { Router, Route, Switch } from "react-router";
+import {Link} from "react-router-dom"
 import './App.css';
 
 const swapiSiteUrl = "https://swapi.co/";
 const apiUrl = "https://swapi.co/api/people/";
 
+// + ETAPE 2
+// Faire en sorte que lorsqu’on clique sur un personnage,
+// on arrive sur sa page avec les informations
+// suivantes: le nom, la couleur des yeux, l’année de naissance,
+// le genre, le nom des vaisseaux
+// spatiaux piloté (starships), la date de création
+// et d’édition de la ressource.
+
 class App extends React.Component {
-    state;
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +47,6 @@ class App extends React.Component {
 
     render = () => {
         const {peoples} = this.state;
-        console.log("render peoples:" + peoples);
         return (
             <div>
                 <u>{swapiSiteUrl}</u><br/><br/>
@@ -54,7 +62,32 @@ class App extends React.Component {
                             </li>)
                     })}
                 </ul>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th colSpan="3">Star Wars Personnages</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Nom</td>
+                        <td>Genre</td>
+                        <td>fiche</td>
+                    </tr>
+                    {peoples && peoples.map((people, i) => {
+                        return (
+                            <tr key={i}>
+                                <td>{people.name}</td>
+                                <td>{people.gender}</td>
+                                {/*<td><Link>lien vers la fiche</Link></td>*/}
+                            </tr>)
+                    })}
+                    </tbody>
+                </table>
+
             </div>)
     };
 }
+
 export default App;
