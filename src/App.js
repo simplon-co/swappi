@@ -5,6 +5,7 @@ const swapiSiteUrl = "https://swapi.co/";
 const apiUrl = "https://swapi.co/api/people/";
 
 class App extends React.Component {
+    state;
     constructor(props) {
         super(props);
         this.state = {
@@ -13,29 +14,29 @@ class App extends React.Component {
         this.onSearchBarChange = this.onSearchBarChange.bind(this);
     }
 
-    onSearchBarChange(event) {
+    onSearchBarChange = event => {
         this.getPeopleSearch(event.currentTarget.value)
-    }
+    };
 
-    getPeopleSearch(textInputBar) {
+    getPeopleSearch = textInputBar => {
         let searchUrl = apiUrl + "?search=" + textInputBar;
         fetch(searchUrl)
             .then(response => response.json())
             .then(data => {
                 this.setState({peoples: data.results})
             });
-    }
+    };
 
-    componentDidMount() {
+    componentDidMount = () => {
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
                 this.setState({peoples: data.results})
             });
-    }
+    };
 
 
-    render() {
+    render = () => {
         const {peoples} = this.state;
         console.log("render peoples:" + peoples);
         return (
@@ -54,47 +55,6 @@ class App extends React.Component {
                     })}
                 </ul>
             </div>)
-    }
+    };
 }
-
-
-// class App extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             peoples: []
-//         }
-//     }
-//
-//     componentDidMount() {
-//         console.log("componentDidMount render peoples:" + this.state.peoples);
-//         fetch(apiUrl)
-//             .then(response => response.json())
-//             .then(data => {
-//                 console.log(data);
-//                 this.setState({peoples: data.results})
-//             });
-//     }
-//
-//     render() {
-//         const {peoples} = this.state;
-//         console.log("render peoples:" + peoples);
-//         return (
-//             <div>
-//                 <u>{swapiSiteUrl}</u><br/><br/>
-//                 <div>
-//                     <input type="text" placeholder="Search.."/>
-//                 </div>
-//                 <ul>
-//                     {peoples && peoples.map((people, i) => {
-//                         return (
-//                             <li key={i}>
-//                                 nom : {people.name}, genre : {people.gender}
-//                             </li>)
-//                     })}
-//                 </ul>
-//             </div>)
-//     }
-// }
-
 export default App;
