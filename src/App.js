@@ -1,12 +1,10 @@
 import React from 'react';
-// import { Router, Route, Switch } from "react-router";
-// import {Link} from "react-router-dom"
 import './App.css';
 import SearchBar from "./component/search-bar";
 import PersonnageTable from "./component/personnage-table";
-
-const swapiSiteUrl = "https://swapi.co/";
-const apiUrl = "https://swapi.co/api/people/";
+//import PersonnageCard from "./component/personnage-card"
+// import { Router, Route, Switch } from "react-router";
+// import {Link} from "react-router-dom"
 
 // + ETAPE 2
 // Faire en sorte que lorsqu’on clique sur un personnage,
@@ -15,8 +13,11 @@ const apiUrl = "https://swapi.co/api/people/";
 // le genre, le nom des vaisseaux
 // spatiaux piloté (starships), la date de création
 // et d’édition de la ressource.
+const swapiSiteUrl = "https://swapi.co/";
+const apiUrl = "https://swapi.co/api/people/";
+const apiSearchUrlFragment = "?search=";
 
-class App extends React.Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,33 +26,35 @@ class App extends React.Component {
         this.onSearchBarChange = this.onSearchBarChange.bind(this);
     }
 
-    onSearchBarChange = event => {
+    onSearchBarChange(event) {
         this.getPeopleSearch(event.currentTarget.value)
-    };
+    }
 
-    getPeopleSearch = textInputBar => {
-        let searchUrl = apiUrl + "?search=" + textInputBar;
-        fetch(searchUrl)
+    fetchPeoples(urlQuery) {
+        fetch(urlQuery)
             .then(response => response.json())
             .then(data => {
                 this.setState({peoples: data.results})
             });
-    };
+    }
 
-    componentDidMount = () => {
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({peoples: data.results})
-            });
-    };
 
-    render = () => {
+    getPeopleSearch(textInputBar) {
+        this.fetchPeoples(apiUrl +
+            apiSearchUrlFragment +
+            textInputBar)
+    }
+
+    componentDidMount() {
+        this.fetchPeoples(apiUrl)
+    }
+
+    render() {
         const {peoples} = this.state;
         return (
             <div>
                 <u>{swapiSiteUrl}</u><br/><br/>
-                <SearchBar onSearchBarChange={this.onSearchBarChange}/>
+                <SearchBar onSearchBarChange={this.onSearchBarChange.bind(this)}/>
                 <ul>
                     {peoples && peoples.map((people, i) => {
                         return (
@@ -62,7 +65,6 @@ class App extends React.Component {
                 </ul>
                 <PersonnageTable peoples={peoples}/>
             </div>)
-    };
+    }
 }
 
-export default App;
